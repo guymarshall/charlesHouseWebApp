@@ -1,19 +1,16 @@
 <?php
-// TODO: change to database lookup
-$items = [
-    ['name' => 'Apple', 'price' => 1.50, 'stock' => 5],
-    ['name' => 'Banana', 'price' => 0.75, 'stock' => 0],
-    ['name' => 'Milk', 'price' => 2.30, 'stock' => 2],
-    ['name' => 'Bread', 'price' => 1.80, 'stock' => 2],
-];
 
-$totalPrice = array_reduce($items, function ($carry, $item) {
-    return $carry + $item['price'];
-}, 0);
+require_once 'db.php';
+require_once 'utilities.php';
 
-$totalStock = array_reduce($items, function ($carry, $item) {
-    return $carry + $item['stock'];
-}, 0);
+$db = new DB();
+$db->init();
+$items = $db->getItems();
+$totalPrice = $db->getTotalPrice();
+$totalStock = $db->getTotalStock();
+
+// TODO: add checkout.php for choosing items from dropdowns, totalling their costs, and removing from database
+
 ?>
 
 <!doctype html>
@@ -45,9 +42,9 @@ $totalStock = array_reduce($items, function ($carry, $item) {
             <?php if (!empty($items)): ?>
                 <?php foreach ($items as $item): ?>
                     <tr>
-                        <td><?= htmlspecialchars($item['name']) ?></td>
-                        <td>£<?= number_format($item['price'], 2) ?></td>
-                        <td><?= $item['stock'] ?></td> <!-- TODO: add increment/decrement buttons to change stock -->
+                        <td><?php echo htmlspecialchars($item['name']) ?></td>
+                        <td><?php echo penceToPounds($item['price']) ?></td>
+                        <td><?php echo $item['stock'] ?></td> <!-- TODO: add increment/decrement buttons to change stock -->
                     </tr>
                 <?php endforeach; ?>
             <?php else: ?>
@@ -59,8 +56,8 @@ $totalStock = array_reduce($items, function ($carry, $item) {
         <tfoot>
             <tr>
                 <th>Total</th>
-                <th>£<?= number_format($totalPrice, 2) ?></th>
-                <th><?= $totalStock ?></th>
+                <th><?php echo penceToPounds($totalPrice) ?></th>
+                <th><?php echo $totalStock ?></th>
             </tr>
         </tfoot>
     </table>
