@@ -18,14 +18,16 @@ $totalStock = array_reduce($items, function ($carry, $item) {
 
 <!doctype html>
 <html lang="en-GB">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Shop Item List</title>
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
     <h1 style="text-align: center;">Shop Items</h1>
 
@@ -33,28 +35,35 @@ $totalStock = array_reduce($items, function ($carry, $item) {
 
     <table>
         <thead>
-        <tr>
-            <th>Item Name</th>
-            <th>Price</th>
-            <th>Stock</th>
-        </tr>
+            <tr>
+                <th>Item Name</th>
+                <th>Price</th>
+                <th>Stock</th>
+            </tr>
         </thead>
         <tbody>
-        <?php foreach ($items as $item): ?>
-            <tr>
-                <td><?= htmlspecialchars($item['name']) ?></td>
-                <td>£<?= number_format($item['price'], 2) ?></td>
-                <td><?= $item['stock'] ?></td> <!-- TODO: add increment/decrement buttons to change stock -->
-            </tr>
-        <?php endforeach; ?>
+            <?php if (!empty($items)): ?>
+                <?php foreach ($items as $item): ?>
+                    <tr>
+                        <td><?= htmlspecialchars($item['name']) ?></td>
+                        <td>£<?= number_format($item['price'], 2) ?></td>
+                        <td><?= $item['stock'] ?></td> <!-- TODO: add increment/decrement buttons to change stock -->
+                    </tr>
+                <?php endforeach; ?>
+            <?php else: ?>
+                <tr>
+                    <td colspan="3" style="text-align: center">No items to show</td>
+                </tr>
+            <?php endif; ?>
         </tbody>
         <tfoot>
-        <tr>
-            <th>Total</th>
-            <th>£<?= number_format($totalPrice, 2) ?></th>
-            <th><?= $totalStock ?></th>
-        </tr>
+            <tr>
+                <th>Total</th>
+                <th>£<?= number_format($totalPrice, 2) ?></th>
+                <th><?= $totalStock ?></th>
+            </tr>
         </tfoot>
     </table>
 </body>
+
 </html>
