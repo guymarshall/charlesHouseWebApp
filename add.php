@@ -19,13 +19,15 @@
 
 <?php
 // TODO: change to save to database
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $newItemName = $_POST['item_name'];
-    $newItemPrice = (float)$_POST['item_price'];
-    $newItemStock = (int)$_POST['item_stock'];
 
-    $items[] = ['name' => $newItemName, 'price' => $newItemPrice, 'stock' => $newItemStock];
-
-    echo "<p style='text-align: center; color: green;'>Item added: $newItemName (£" . number_format($newItemPrice, 2) . ")</p>";
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+    exit;
 }
-?>
+
+$newItemName = $_POST['item_name'];
+$newItemPrice = (float)$_POST['item_price'];
+$newItemStock = (int)$_POST['item_stock'];
+
+$items[] = ['name' => $newItemName, 'price' => $newItemPrice, 'stock' => $newItemStock];
+
+header('Location: index.php');
