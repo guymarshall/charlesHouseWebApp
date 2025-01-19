@@ -26,9 +26,9 @@ $totalStock = $db->getTotalStock();
 </head>
 
 <body>
-    <h1 style="text-align: center;">Shop Items</h1>
-
     <a href="add.php"><button type="button">Add new item</button></a>
+
+    <h1 style="text-align: center;">Shop Items</h1>
 
     <table>
         <thead>
@@ -44,7 +44,7 @@ $totalStock = $db->getTotalStock();
                     <tr>
                         <td><?php echo htmlspecialchars($item['name']) ?></td>
                         <td><?php echo penceToPounds($item['price']) ?></td>
-                        <td><?php echo $item['stock'] ?></td> <!-- TODO: add increment/decrement buttons to change stock -->
+                        <td><?php echo $item['stock'] ?></td>
                     </tr>
                 <?php endforeach; ?>
             <?php else: ?>
