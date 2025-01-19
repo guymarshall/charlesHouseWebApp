@@ -49,4 +49,22 @@ class DB
 
         return $result->fetchArray(SQLITE3_NUM)[0];
     }
+
+    public function insert(array $item): void
+    {
+        if (!isset($item['name'], $item['price'], $item['stock'])) {
+            throw new InvalidArgumentException('Missing required fields in $item array.');
+        }
+
+        $statement = $this->db->prepare('INSERT INTO items (name, price, stock) VALUES (:name, :price, :stock)');
+        $statement->bindValue(':name', $item['name']);
+        $statement->bindValue(':price', $item['price']);
+        $statement->bindValue(':stock', $item['stock']);
+
+        try {
+            $statement->execute();
+        } catch (Exception $exception) {
+            die('Failed to add items: ' . $exception->getMessage());
+        }
+    }
 }

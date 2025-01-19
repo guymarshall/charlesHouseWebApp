@@ -18,16 +18,22 @@
 </form>
 
 <?php
-// TODO: change to save to database
+require_once 'db.php';
+
+$db = new DB();
+$db->init();
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     exit;
 }
 
-$newItemName = $_POST['item_name'];
-$newItemPrice = (float)$_POST['item_price'];
-$newItemStock = (int)$_POST['item_stock'];
+$newItem = [
+    'name' => $_POST['item_name'],
+    'price' => (int)$_POST['item_price'],
+    'stock' => (int)$_POST['item_stock'],
+];
 
-$items[] = ['name' => $newItemName, 'price' => $newItemPrice, 'stock' => $newItemStock];
+$db->insert($newItem);
 
 header('Location: index.php');
+exit;
