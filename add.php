@@ -29,7 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 
 $newItem = [
     'name' => $_POST['item_name'],
-    'price' => (int)$_POST['item_price'],
+    'price' => (int)($_POST['item_price'] * 100),
     'stock' => (int)$_POST['item_stock'],
 ];
 
